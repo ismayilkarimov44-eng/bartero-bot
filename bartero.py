@@ -1,3 +1,10 @@
+Редактор открыт! Теперь нужно выделить весь текст и заменить на новый код.
+
+Нажми и удержи на строке 1 → выбери **"Выделить всё"** → удали → вставь новый код который я дам ниже.
+
+Вот новый код — скопируй его:
+
+```python
 import telebot
 from telebot import types
 
@@ -20,12 +27,14 @@ def offer_item(message):
     bot.register_next_step_handler(message, save_offer)
 
 def save_offer(message):
+    username = f"@{message.from_user.username}" if message.from_user.username else message.from_user.first_name
     offers.append({
         'user': message.from_user.first_name,
+        'username': username,
         'user_id': message.chat.id,
         'text': message.text
     })
-    bot.send_message(message.chat.id, "✅ Ваше предложение добавлено!")
+    bot.send_message(message.chat.id, "✅ Ваше предложение добавлено! Люди увидят ваш контакт.")
 
 @bot.message_handler(func=lambda m: m.text == '🔍 Смотреть предложения')
 def show_offers(message):
@@ -33,6 +42,9 @@ def show_offers(message):
         bot.send_message(message.chat.id, "Пока нет предложений. Будьте первым!")
     else:
         for o in offers:
-            bot.send_message(message.chat.id, f"👤 {o['user']}:\n{o['text']}")
+            bot.send_message(message.chat.id, f"👤 {o['user']} ({o['username']}):\n{o['text']}")
 
 bot.polling()
+```
+
+После вставки нажми **"Внесите изменения"** 👇
