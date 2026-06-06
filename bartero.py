@@ -1,4 +1,3 @@
-
 import telebot
 from telebot import types
 
@@ -39,6 +38,4 @@ def show_offers(message):
             bot.send_message(message.chat.id, f"👤 {o['user']} ({o['username']}):\n{o['text']}")
 
 bot.polling()
-```
 
-После вставки нажми **"Внесите изменения"** 👇
