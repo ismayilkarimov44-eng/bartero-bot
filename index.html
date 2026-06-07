@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bartero — Обменяй вещи в Баку</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0a0f;--accent:#ff6b35;--accent2:#ffb347;--text:#f0ede8;--muted:#6b6870;--card:#131318;--border:rgba(255,107,53,0.15)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'Manrope',sans-serif;overflow-x:hidden}
+.orb{position:fixed;border-radius:50%;filter:blur(80px);pointer-events:none;z-index:0}
+.orb1{width:400px;height:400px;background:radial-gradient(circle,rgba(255,107,53,0.15),transparent 70%);top:-100px;right:-100px}
+.orb2{width:300px;height:300px;background:radial-gradient(circle,rgba(255,179,71,0.1),transparent 70%);bottom:100px;left:-80px}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 24px;display:flex;justify-content:space-between;align-items:center;background:rgba(10,10,15,0.8);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:22px;letter-spacing:-0.5px}
+.logo span{color:var(--accent)}
+.nav-btn{background:var(--accent);color:#fff;border:none;padding:10px 20px;border-radius:50px;font-family:'Manrope',sans-serif;font-weight:600;font-size:13px;cursor:pointer;text-decoration:none;display:inline-block;transition:all 0.2s}
+.hero{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:120px 24px 80px}
+.badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,107,53,0.1);border:1px solid rgba(255,107,53,0.3);border-radius:50px;padding:6px 16px;font-size:12px;font-weight:600;color:var(--accent);letter-spacing:0.5px;text-transform:uppercase;margin-bottom:32px;animation:fadeUp 0.6s ease both}
+.badge::before{content:'';width:6px;height:6px;background:var(--accent);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(1.3)}}
+h1{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(40px,10vw,72px);line-height:1.05;letter-spacing:-2px;margin-bottom:24px;animation:fadeUp 0.6s ease 0.1s both}
+h1 .highlight{background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.subtitle{font-size:clamp(15px,4vw,18px);color:var(--muted);max-width:420px;line-height:1.7;margin-bottom:48px;animation:fadeUp 0.6s ease 0.2s both}
+.cta-group{display:flex;flex-direction:column;gap:12px;align-items:center;animation:fadeUp 0.6s ease 0.3s both}
+.cta-primary{display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;text-decoration:none;padding:16px 36px;border-radius:50px;font-weight:700;font-size:16px;transition:all 0.3s;box-shadow:0 8px 32px rgba(255,107,53,0.3)}
+.cta-secondary{color:var(--muted);font-size:13px;font-weight:500}
+.floating-cards{position:relative;width:100%;max-width:340px;margin:60px auto 0;animation:fadeUp 0.6s ease 0.4s both}
+.card-item{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px;display:flex;align-items:center;gap:14px;margin-bottom:12px}
+.card-emoji{font-size:32px;width:52px;height:52px;background:rgba(255,107,53,0.08);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.card-info{flex:1}
+.card-title{font-weight:600;font-size:14px;margin-bottom:4px}
+.card-sub{font-size:12px;color:var(--muted)}
+.card-arrow{color:var(--accent);font-size:18px;font-weight:700}
+.section{position:relative;z-index:1;padding:80px 24px}
+.section-label{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:16px;text-align:center}
+.section-title{font-family:'Syne',sans-serif;font-size:clamp(28px,6vw,42px);font-weight:800;text-align:center;letter-spacing:-1px;margin-bottom:48px}
+.steps{display:flex;flex-direction:column;gap:16px;max-width:400px;margin:0 auto}
+.step{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:24px;display:flex;gap:20px;align-items:flex-start}
+.step-num{font-family:'Syne',sans-serif;font-size:32px;font-weight:800;color:rgba(255,107,53,0.2);line-height:1;flex-shrink:0;width:40px}
+.step-content h3{font-weight:700;font-size:16px;margin-bottom:6px}
+.step-content p{font-size:13px;color:var(--muted);line-height:1.6}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:400px;margin:0 auto 80px;padding:0 24px}
+.stat{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px 16px;text-align:center}
+.stat-num{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block;margin-bottom:4px}
+.stat-label{font-size:11px;color:var(--muted);font-weight:500}
+.cta-bottom{position:relative;z-index:1;margin:0 24px 80px;background:linear-gradient(135deg,rgba(255,107,53,0.1),rgba(255,179,71,0.05));border:1px solid rgba(255,107,53,0.2);border-radius:24px;padding:48px 32px;text-align:center}
+.cta-bottom h2{font-family:'Syne',sans-serif;font-size:clamp(24px,6vw,36px);font-weight:800;letter-spacing:-1px;margin-bottom:16px}
+.cta-bottom p{color:var(--muted);font-size:14px;margin-bottom:32px;line-height:1.7}
+footer{position:relative;z-index:1;text-align:center;padding:32px 24px;border-top:1px solid var(--border);color:var(--muted);font-size:12px}
+footer strong{color:var(--accent)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+<nav>
+<div class="logo">Bar<span>tero</span></div>
+<a href="https://t.me/BarteroAzBot" class="nav-btn">Открыть бот →</a>
+</nav>
+<section class="hero">
+<div class="badge">🔥 Баку · Бесплатно · Уже работает</div>
+<h1>Обменяй вещи<br>на <span class="highlight">нужные</span></h1>
+<p class="subtitle">Первая бартерная платформа в Баку. Предложи что есть — получи что нужно. Без денег.</p>
+<div class="cta-group">
+<a href="https://t.me/BarteroAzBot" class="cta-primary"><span>📦</span> Начать обмен</a>
+<span class="cta-secondary">Через Telegram · Бесплатно</span>
+</div>
+<div class="floating-cards">
+<div class="card-item"><div class="card-emoji">🚲</div><div class="card-info"><div class="card-title">Велосипед → Телефон</div><div class="card-sub">Эльчин · Баку, Насими</div></div><div class="card-arrow">→</div></div>
+<div class="card-item"><div class="card-emoji">📚</div><div class="card-info"><div class="card-title">Книги → Наушники</div><div class="card-sub">Лейла · Баку, Хатаи</div></div><div class="card-arrow">→</div></div>
+<div class="card-item"><div class="card-emoji">🪑</div><div class="card-info"><div class="card-title">Стул → Лампа</div><div class="card-sub">Орхан · Баку, Сабаил</div></div><div class="card-arrow">→</div></div>
+</div>
+</section>
+<div class="stats">
+<div class="stat"><span class="stat-num">100%</span><span class="stat-label">Бесплатно</span></div>
+<div class="stat"><span class="stat-num">Баку</span><span class="stat-label">Локально</span></div>
+<div class="stat"><span class="stat-num">24/7</span><span class="stat-label">Онлайн</span></div>
+</div>
+<section class="section">
+<div class="section-label">Как это работает</div>
+<h2 class="section-title">Три простых шага</h2>
+<div class="steps">
+<div class="step"><div class="step-num">01</div><div class="step-content"><h3>Фото + описание</h3><p>Сфотографируй вещь и напиши что хочешь взамен</p></div></div>
+<div class="step"><div class="step-num">02</div><div class="step-content"><h3>Люди смотрят</h3><p>Все пользователи видят твоё объявление с фото и контактом</p></div></div>
+<div class="step"><div class="step-num">03</div><div class="step-content"><h3>Договариваетесь</h3><p>Пишете друг другу напрямую и договариваетесь об обмене</p></div></div>
+</div>
+</section>
+<div class="cta-bottom">
+<h2>Готов обменяться?</h2>
+<p>Присоединяйся к Bartero прямо сейчас.<br>Это бесплатно и займёт 1 минуту.</p>
+<a href="https://t.me/BarteroAzBot" class="cta-primary"><span>🚀</span> Открыть Bartero</a>
+</div>
+<footer><strong>Bartero.az</strong> · Первая бартерная платформа Баку · 2024</footer>
+</body>
+</html>
